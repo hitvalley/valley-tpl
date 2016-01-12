@@ -1,0 +1,99 @@
+<div id="id-container"></div>
+<script id="template2.html" type="text/html">
+{js var len = list.length;}
+{include header.html mlen=len lenStr="lenStr"}
+{require header2.html}
+</script>
+<script id="template.html" type="text/html">
+Demo
+{js var i = 0}
+{js var len = list.length}
+{include header.html len=len lenStr="lenStr"}
+<ul>
+{for (; i < len; i ++)}
+  <li {if (i%2 === 0)} class="even"{else} class="odd"{/if}>
+    {include item.html item=list[i]}
+  </li>
+{/for}
+</ul>
+<div>
+{js var m = 12;}
+{if (m > 1000)}
+  {m}
+{else if (m >= 100)}
+  {'0' + m}
+{elseif (m >= 10)}
+  {'00' + m}
+{else}
+  {'000' + m}
+{/if}
+</div>
+<p>1 - 100</p>
+</script>
+<script id="header.html" type="text/html">
+<h1>{header}</h1>
+<p>{lenStr}:{mlen}</p>
+<h2>{this.author}</h2>
+</script>
+<script id="header2.html" type="text/html">
+<h1>{header}</h1>
+<h2>{this.author}</h2>
+</script>
+<script id="item.html" type="text/html">
+<span>{item}</span>
+</script>
+<script>
+var module = {};
+function require(){}
+</script>
+<script src="./valleytpl.js"></script>
+<script>
+var util = {
+  format: function(tpl) {
+    var args = arguments;
+    var index = 1;
+    return tpl.replace(/%s/g, function(){
+      return args[index ++];
+    });
+  }
+}
+function getTplContent(template) {
+  return new Promise(function(resolve, reject){
+    var script = document.getElementById('' + template);
+    resolve(script.innerText);
+  });
+}
+
+function test1(data, scope) {
+  var tplId = 'template2.html';
+  initTplObj(tplId).then(function(tplObj){
+    // var html = tpl(template, data, tplObj, scope);
+    var funcStr = tplToFuncStr(tplId, tplObj);
+    console.log(funcStr);
+  });
+}
+
+function runTest(callback) {
+  var data = {
+    header: 'search list',
+    list: ['baidu', 'sogou', '360', 'google']
+  };
+  var scope = {
+    author: 'gutianyu'
+  };
+  callback(data, scope);
+}
+
+window.onload = function() {
+  // vtpl('template2.html', {
+  //   header: 'search list',
+  //   list: ['baidu', 'sogou', '360', 'google']
+  // }, {
+  //   author: 'gutianyu'
+  // }).then(function(html){
+  //   document.getElementById('id-container').innerHTML = html;
+  // });
+  // var funcStr = tplToFuncStr('./template2.html')
+  runTest(test1);
+};
+</script>

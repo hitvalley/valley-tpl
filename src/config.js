@@ -1,0 +1,3 @@
+Valley.tplObj = {};
+
+Valley.tplPath = './';

@@ -46,31 +46,19 @@ Demo
 var module = {};
 function require(){}
 </script>
-<script src="./valleytpl.js"></script>
+<script src="../tpl.js"></script>
 <script>
-var util = {
-  format: function(tpl) {
-    var args = arguments;
-    var index = 1;
-    return tpl.replace(/%s/g, function(){
-      return args[index ++];
-    });
-  }
-}
-function getTplContent(template) {
+Valley.getFileContent = function(template) {
   return new Promise(function(resolve, reject){
     var script = document.getElementById('' + template);
     resolve(script.innerText);
   });
-}
+};
+Valley.tplPath = '';
 
 function test1(data, scope) {
-  var tplId = 'template2.html';
-  initTplObj(tplId).then(function(tplObj){
-    // var html = tpl(template, data, tplObj, scope);
-    var funcStr = tplToFuncStr(tplId, tplObj);
-    console.log(funcStr);
-  });
+  // var tplId = 'template2.html';
+  return Valley.vtpl('template2.html', data, scope);
 }
 
 function runTest(callback) {
@@ -81,19 +69,18 @@ function runTest(callback) {
   var scope = {
     author: 'gutianyu'
   };
-  callback(data, scope);
+  var res = callback(data, scope);
+  var fname = callback.fname;
+  if (res.then) {
+    res.then(function(html){
+      console.log(fname, html);
+    });
+  } else {
+    console.log(fname, res);
+  }
 }
 
 window.onload = function() {
-  // vtpl('template2.html', {
-  //   header: 'search list',
-  //   list: ['baidu', 'sogou', '360', 'google']
-  // }, {
-  //   author: 'gutianyu'
-  // }).then(function(html){
-  //   document.getElementById('id-container').innerHTML = html;
-  // });
-  // var funcStr = tplToFuncStr('./template2.html')
   runTest(test1);
 };
 </script>

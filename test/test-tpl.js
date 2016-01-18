@@ -1,4 +1,4 @@
-var vtpl = require('./valleytpl');
+require('../tpl');
 
 // console.log(vtpl);
 
@@ -6,9 +6,9 @@ var vtpl = require('./valleytpl');
 //   console.log(tpl);
 // });
 
-var template = './template.html';
+var template = 'template.html';
 try {
-  vtpl(template, {
+  Valley.tpl(template, {
     header: 'searcher list',
     list: ['baidu', 'sogou', '360', 'google']
   }, {

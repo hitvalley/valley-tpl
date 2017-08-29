@@ -1,3 +1,4 @@
-# 简单易用的js模板引擎
+# valleytpl
+JavaScript Template Engine For ValleyJS
 
 

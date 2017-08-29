@@ -24,7 +24,7 @@ describe('test init tpl spec', () => {
       type: 'var',
       content: 'timestamp|date_str:1,"test",m,"info,info2"'
     }];
-    expect(initTpl(tags3)).toEqual('var vtmpArr = [];\n(function(){var args=[1,"test",m,"info,info2"];args.unshift(timestamp);vtmpArr.push(this.date_str(args));}());\nreturn vtmpArr.join("");');
+    expect(initTpl(tags3)).toEqual('var vtmpArr = [];\n(function(scope){var args=[1,"test",m,"info,info2"];args.unshift(timestamp);vtmpArr.push(scope.date_str.apply(scope, args));}(this));\nreturn vtmpArr.join("");');
   });
   it('test if', () => {
     let tags = [{

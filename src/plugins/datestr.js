@@ -1,13 +1,6 @@
 const DefaultTPL = 'Y-M-D H:I:S';
 
-export default function datestr(tpl, timestamp) {
-  if (arguments.length === 0) {
-    tpl = DefaultTPL;
-  }
-  if (typeof tpl === 'number') {
-    timestamp = tpl;
-    tpl = DefaultTPL;
-  }
+export default function datestr(timestamp, tpl) {
   let date;
   if (!timestamp) {
     date = new Date();

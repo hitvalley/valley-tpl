@@ -6,25 +6,46 @@ describe('test init tpl spec', () => {
       type: 'string',
       content: 'test'
     }];
-    expect(initTpl(tags)).toEqual('var vtmpArr = [];\nvtmpArr.push(\'test\');\nreturn vtmpArr.join("");');
+    let res = [
+      'var vtmpArr = [];',
+      'vtmpArr.push(\'test\');',
+      'return vtmpArr.join("");'
+    ];
+    expect(initTpl(tags)).toEqual(res);
   });
   it ('test variable', () => {
+    let res;
     let tags = [{
       type: 'var',
       content: 'str'
     }];
-    expect(initTpl(tags, ["str"])).toEqual('var vtmpArr = [];\nvtmpArr.push(typeof str === "number" ? str : (str || ""));\nreturn vtmpArr.join("");');
+    res = [
+      'var vtmpArr = [];',
+      'vtmpArr.push(typeof str === "number" ? str : (str || ""));',
+      'return vtmpArr.join("");'
+    ];
+    expect(initTpl(tags, ["str"])).toEqual(res);
     let tags2 = [{
       type: 'var',
       content: 'timestamp|date_str'
     }];
-    expect(initTpl(tags2)).toEqual('var vtmpArr = [];\nvtmpArr.push(this.date_str(timestamp));\nreturn vtmpArr.join("");');
+    res = [
+      'var vtmpArr = [];',
+      'vtmpArr.push(this.date_str(timestamp));',
+      'return vtmpArr.join("");'
+    ];
+    expect(initTpl(tags2)).toEqual(res);
     // console.log(initTpl(tags2))
     let tags3 = [{
       type: 'var',
       content: 'timestamp|date_str:1,"test",m,"info,info2"'
     }];
-    expect(initTpl(tags3)).toEqual('var vtmpArr = [];\n(function(scope){var args=[1,"test",m,"info,info2"];args.unshift(timestamp);vtmpArr.push(scope.date_str.apply(scope, args));}(this));\nreturn vtmpArr.join("");');
+    res = [
+      'var vtmpArr = [];',
+      '(function(scope){var args=[1,"test",m,"info,info2"];args.unshift(timestamp);vtmpArr.push(scope.date_str.apply(scope, args));}(this));',
+      'return vtmpArr.join("");'
+    ];
+    expect(initTpl(tags3)).toEqual(res);
   });
   it('test if', () => {
     let tags = [{
@@ -50,7 +71,7 @@ describe('test init tpl spec', () => {
       '}',
       'return vtmpArr.join("");'
     ];
-    expect(initTpl(tags)).toEqual(res.join('\n'));
+    expect(initTpl(tags)).toEqual(res);
   });
   it('test for', () => {
     let tags = [{
@@ -69,8 +90,7 @@ describe('test init tpl spec', () => {
       '}',
       'return vtmpArr.join("");'
     ];
-    expect(initTpl(tags)).toEqual(res.join('\n'));
-    // expect(initTpl(tags, ['test'])).toEqual(res2.join('\n'));
+    expect(initTpl(tags)).toEqual(res);
   });
 });
 

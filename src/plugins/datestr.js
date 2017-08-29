@@ -2,6 +2,10 @@ const DefaultTPL = 'Y-M-D H:I:S';
 
 export default function datestr(timestamp, tpl) {
   let date;
+  if (typeof timestamp === 'string') {
+    tpl = timestamp;
+    timestamp = new Date();
+  }
   if (!timestamp) {
     date = new Date();
   } else if (timestamp.toString().length === 10) {

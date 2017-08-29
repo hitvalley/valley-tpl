@@ -93,5 +93,5 @@ export default function initTplFunc(tags) {
     }
   });
   tpls.push('return vtmpArr.join("");');
-  return tpls.join('\n');
+  return tpls;
 }

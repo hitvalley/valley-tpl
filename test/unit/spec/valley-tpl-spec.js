@@ -43,14 +43,12 @@ describe('test valley tpl', () => {
       info: 'test hack',
       content: 'hack block ready'
     });
-    console.log(html + '|');
     let res = [
       '<h1>test hack</h1> <div>hack block ready</div> <script> ',
       'console.log("{{info}}");',
       'console.log("{{content}}")',
-      '</script>'
-    ];
-    console.log(res + '|');
+      ' </script>'
+    ].join('\n');
     expect(html).toEqual(res);
   });
 });

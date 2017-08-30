@@ -1,5 +1,5 @@
-import vtpl from './index';
-import prepareTpl from './prepare-tpl';
+import vtpl from '../index';
+import prepareTpl from '../prepare-tpl';
 
 vtpl.config = {
   encoding: 'utf-8',

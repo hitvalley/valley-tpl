@@ -9,9 +9,9 @@
   "scripts": {
     "rollup": "node_modules/.bin/rollup",
     "build": "rollup src/index.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
-    "build-node": "rollup src/node.js --format cjs --name \"Valley\" --output dist/vtpl-node.js",
-    "build-plus": "rollup src/index-plus.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
-    "build-plus-node": "rollup src/node-plus.js --format cjs --name \"vtpl\" --output dist/vtpl-node.js",
+    "build-node": "rollup src/output/node.js --format cjs --name \"Valley\" --output dist/vtpl-node.js",
+    "build-plus": "rollup src/output/index-plus.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
+    "build-plus-node": "rollup src/output/node-plus.js --format cjs --name \"vtpl\" --output dist/vtpl-node.js",
     "node": "rollup src/tpl-node.js -c rollup.config.js",
     "dev": "node_modules/.bin/rollup -c",
     "demo": "nodemon --exec node_modules/.bin/babel-node demo.js",

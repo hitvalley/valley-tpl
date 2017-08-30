@@ -1,2 +1,0 @@
-Valley.define([], function(){
-

@@ -1,3 +1,0 @@
-Valley.tplObj = {};
-
-Valley.tplPath = './';

@@ -1,4 +1,5 @@
 import removeComments from './remove-comments';
+import hackBlock from './hack-block';
 import analyzeTag from './analyze-tag';
 import initTpl from './init-tpl';
 import initFunc from './init-func';
@@ -14,6 +15,10 @@ function ValleyTpl(tpl, data, scope) {
   // 去掉注释
   res = removeComments(tpl);
 
+  // 挂起页面中不需要解析的块
+  let hackObj = {};
+  res = hackBlock(res, hackObj);
+
   // 解析标签
   res = analyzeTag(res);
 
@@ -21,7 +26,7 @@ function ValleyTpl(tpl, data, scope) {
   res = initTpl(res);
 
   // 生成模板函数
-  res = initFunc(res, keys);
+  res = initFunc(res, keys, hackObj);
 
   // 执行模板函数
   res = res.apply(scope, values);

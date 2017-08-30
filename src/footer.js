@@ -1,1 +1,0 @@
-}(module && module.exports ? global : window));

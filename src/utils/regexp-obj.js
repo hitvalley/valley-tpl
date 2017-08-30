@@ -38,9 +38,15 @@ const blockOpen = `${tagOpen}block\\s+(\\w+)${tagClose}`;
 const blockClose = `${tagOpen}/block${tagClose}`;
 const blockRegExp = new RegExp(`${blockOpen}(.*?)${blockClose}`, 'igm');
 
+// for hack block
+const hackOpen = `${tagOpen}hack${tagClose}`;
+const hackClose = `${tagOpen}/hack${tagClose}`;
+const hackBlockRegExp = new RegExp(`${hackOpen}((?:.|[\r\n])*?)${hackClose}`, 'igm');
+
 export {
   filterRegExp,
   analyzeFilter,
+  hackBlockRegExp,
   includeRegExp,
   extendRegExp,
   blockRegExp,

@@ -53,7 +53,7 @@ export default function initTplFunc(tags) {
     let res;
     switch (tag.type) {
     case 'string':
-      tpls.push(sprintf(stringTpl, tag.content.replace(/[\r\n]+/g, ' ')));
+      tpls.push(sprintf(stringTpl, tag.content.replace(/[\r\n]+/g, '\\r\\n')));
       break;
     case 'var':
       let filterObj = analyzeFilter(content);

@@ -36,7 +36,7 @@ const extendRegExp = new RegExp(`${tagOpen}extends\\s+([\\w.\/]+)${tagClose}`, '
 // for block tag
 const blockOpen = `${tagOpen}block\\s+(\\w+)${tagClose}`;
 const blockClose = `${tagOpen}/block${tagClose}`;
-const blockRegExp = new RegExp(`${blockOpen}(.*?)${blockClose}`, 'igm');
+const blockRegExp = new RegExp(`${blockOpen}((?:.|[\r\n])*?)${blockClose}`, 'igm');
 
 // for hack block
 const hackOpen = `${tagOpen}hack${tagClose}`;

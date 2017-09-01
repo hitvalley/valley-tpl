@@ -44,11 +44,13 @@ describe('test valley tpl', () => {
       content: 'hack block ready'
     });
     let res = [
-      '<h1>test hack</h1> <div>hack block ready</div> <script> ',
+      '<h1>test hack</h1>',
+      '<div>hack block ready</div>',
+      '<script>',
       'console.log("{{info}}");',
       'console.log("{{content}}")',
-      ' </script>'
-    ].join('\n');
-    expect(html).toEqual(res);
+      '</script>'
+    ].join('');
+    expect(html.replace(/[\r\n]+/g, '')).toEqual(res);
   });
 });

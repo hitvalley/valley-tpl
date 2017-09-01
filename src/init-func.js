@@ -17,7 +17,7 @@ export default function initFunction(tags, keys, hackObj) {
   let farr = scopes.concat(tags);
   let funstr = farr.join('\n');
   funstr = replaceHack(funstr, hackObj);
-  funstr = `try { funstr } catch(e) { console.error(e); }`;
+  funstr = `try { ${funstr} } catch(e) { console.error(e); }`;
   try {
     return new Function(keys, funstr);
   } catch(e) {

@@ -1,7 +1,7 @@
 const tagOpen = '{{';
 const tagClose = '}}';
 
-const vRegStr = '([$\\w.]+)';//变量正则字符串
+const vRegStr = '([$\\w.\\[\\]]+)';//变量正则字符串
 const filterRegExp = new RegExp(`${vRegStr}(?:\\|${vRegStr}(?::(.*))?)?`);
 const inputRegExp = /\s*("[^"]+"|[^,]+)\s*/g;
 

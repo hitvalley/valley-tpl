@@ -33,6 +33,7 @@
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "jasmine": "^2.8.0",
     "jasmine-node": "^1.14.5",
@@ -45,6 +46,7 @@
     "rollup-plugin-json": "^2.3.0"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "lodash": "^4.17.4",
     "rollup": "^0.43.1"
   }

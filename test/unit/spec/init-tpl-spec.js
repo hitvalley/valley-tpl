@@ -92,5 +92,28 @@ describe('test init tpl spec', () => {
     ];
     expect(initTpl(tags)).toEqual(res);
   });
+  it('test for obj', () => {
+    let tags = [{
+      type: 'for',
+      content: 'var i in obj'
+    }, {
+      type: 'var',
+      content: 'obj[i].key'
+    }, {
+      type: 'var',
+      content: 'obj[i].value'
+    }, {
+      type: 'endfor'
+    }];
+    let res = [
+      'var vtmpArr = [];',
+      ';for (var i in obj) {',
+      'vtmpArr.push(typeof obj[i].key === "number" ? obj[i].key : (obj[i].key || ""));',
+      'vtmpArr.push(typeof obj[i].value === "number" ? obj[i].value : (obj[i].value || ""));',
+      '}',
+      'return vtmpArr.join("");'
+    ];
+    expect(initTpl(tags)).toEqual(res);
+  });
 });
 

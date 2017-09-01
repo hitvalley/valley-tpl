@@ -45,5 +45,18 @@ describe('test analyze tag spec', () => {
     }]
     expect(analyzeTag(tpl)).toEqual(res);
   });
+  it('test for obj', () => {
+    let tpl = '{{for var i in obj}}{{obj[i]}}{{/for}}';
+    let res = [{
+      type: 'for',
+      content: 'var i in obj'
+    }, {
+      type: 'var',
+      content: 'obj[i]'
+    }, {
+      type: 'endfor'
+    }]
+    expect(analyzeTag(tpl)).toEqual(res);
+  });
 });
 

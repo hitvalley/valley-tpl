@@ -7,7 +7,7 @@ function initScope() {
 function replaceHack(content, hackObj) {
   let hackRegExp = new RegExp(`<<HACK_MARK_\\d+>>`, 'g');
   content = content.replace(hackRegExp, $0 => {
-    return hackObj[$0].replace(/[\r\n]/g, '\\n')
+    return hackObj[$0].replace(/[\r\n]/g, '\\n').replace(/'/g, "\\'");
   });
   return content;
 }
@@ -21,6 +21,7 @@ export default function initFunction(tags, keys, hackObj) {
   try {
     return new Function(keys, funstr);
   } catch(e) {
+    console.error(funstr);
     console.error(e);
   }
 }

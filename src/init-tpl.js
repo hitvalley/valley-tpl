@@ -53,7 +53,7 @@ export default function initTplFunc(tags) {
     let res;
     switch (tag.type) {
     case 'string':
-      tpls.push(sprintf(stringTpl, tag.content.replace(/[\r\n]+/g, '\\r\\n')));
+      tpls.push(sprintf(stringTpl, tag.content.replace(/[\r\n]+/g, '\\n').replace(/'/g, "\\'")));
       break;
     case 'var':
       let filterObj = analyzeFilter(content);
@@ -72,8 +72,8 @@ export default function initTplFunc(tags) {
       if (!content.match(/^\(.*\)$/)) {
         content = `(${content})`;
       }
-      content = replaceJudgement(content);
-      res = content.match(varRegExp);
+      // content = replaceJudgement(content);
+      // res = content.match(varRegExp);
       if (tag.type === 'elseif') {
         tpls.push(`} else if ${content} {`);
       } else {

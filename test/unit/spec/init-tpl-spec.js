@@ -92,6 +92,58 @@ describe('test init tpl spec', () => {
     ];
     expect(initTpl(tags)).toEqual(res);
   });
+  it('test each', () => {
+    let tags = [{
+      type: 'each',
+      content: 'list as item,index'
+    }, {
+      type: 'var',
+      content: 'index'
+    }, {
+      type: 'string',
+      content: '-'
+    }, {
+      type: 'var',
+      content: 'item'
+    }, {
+      type: 'string',
+      content: '|'
+    }, {
+      type: 'endeach'
+    }];
+    let res = [
+      'var vtmpArr = [];',
+      'Object.keys(list).forEach(function(index){var item = list[index];',
+      'vtmpArr.push(typeof index === "number" ? index : (index || ""));',
+      'vtmpArr.push(\'-\');',
+      'vtmpArr.push(typeof item === "number" ? item : (item || ""));',
+      'vtmpArr.push(\'|\');',
+      '});',
+      'return vtmpArr.join("");'
+    ];
+    let res2 = [
+      'var vtmpArr = [];',
+      'Object.values(list).forEach(function(item){',
+      'vtmpArr.push(typeof item === "number" ? item : (item || ""));',
+      'vtmpArr.push(\'|\');',
+      '});',
+      'return vtmpArr.join("");'
+    ];
+    let tags2 = [{
+      type: 'each',
+      content: 'list as item'
+    }, {
+      type: 'var',
+      content: 'item'
+    }, {
+      type: 'string',
+      content: '|'
+    }, {
+      type: 'endeach'
+    }];
+    expect(initTpl(tags)).toEqual(res);
+    expect(initTpl(tags2)).toEqual(res2);
+  });
   it('test for obj', () => {
     let tags = [{
       type: 'for',

@@ -50,9 +50,15 @@ export default function analyzeTag(tpl) {
         };
         break;
       case 'for':
+      case 'each':
         tagObj = {
           type: tagName,
           content: tagArr.join(' ')
+        };
+        break;
+      case '/each':
+        tagObj = {
+          type: 'endeach'
         };
         break;
       case '/for':

@@ -36,7 +36,7 @@ const iRegStr = '("[^"]+"|[^,]+)';//输入正则字符串
 // const filterRegExp = new RegExp(`${vRegStr}\|${vRegStr}(?:\\:${iRegStr}(?:,${iRegStr}))?`);
 
 function replaceJudgement(str) {
-  let keyRegExp = new RegExp(Object.keys(checkObj).join('|'), 'ig');
+  let keyRegExp = new RegExp(Object.keys(checkObj).join('\\s+|\\s+'), 'ig');
   return str.replace(keyRegExp, function($0){
     return checkObj[$0];
   });
@@ -86,6 +86,28 @@ export default function initTplFunc(tags) {
     case 'endif':
     case 'endfor':
       tpls.push('}');
+      break;
+    case 'each':
+      // each语法: {{each list as value, key}}
+      let tmps = content.split(/\s+as\s+/);
+      if (tmps.length < 2) {
+        throw 'each缺少输入参数';
+      }
+      let eachName = tmps[0];
+      let eachInput = tmps[1].split(',');
+      let eachValue = (eachInput[0] || '').trim();
+      let eachKey = (eachInput[1] || '').trim();
+      // let forArr = `${tmps[0]}.forEach(function(${tmps[1]}){`;
+      let forObj;
+      if (eachKey) {
+        forObj = `Object.keys(${eachName}).forEach(function(${eachKey}){var ${eachValue} = ${eachName}[${eachKey}];`;
+      } else {
+        forObj = `Object.values(${eachName}).forEach(function(${eachValue}){`;
+      }
+      tpls.push(forObj);
+      break;
+    case 'endeach':
+      tpls.push('});');
       break;
     case 'js':
       tpls.push(`;${content};`);

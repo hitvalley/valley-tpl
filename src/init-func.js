@@ -1,6 +1,7 @@
 function initScope() {
   let scopes = ['var $scope = {};'];
   scopes.push('$scope.now = Date.now();');
+  scopes.push('var self = this;');
   return scopes;
 }
 

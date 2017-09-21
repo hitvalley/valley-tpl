@@ -50,5 +50,7 @@ describe('test expreg spec', () => {
     expect(getVariableList(check3)).toEqual(['list', 'name', 'index']);
     var check4 = 'var i = 0; i < obj.list.length; i ++';
     expect(getVariableList(check4)).toEqual(['i', 'i', 'obj', 'i']);
+    var check5 = 'm === \'b\' && n !== "b"';
+    expect(getVariableList(check5)).toEqual(['m', 'n']);
   });
 });

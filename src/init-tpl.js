@@ -74,10 +74,6 @@ export default function initTplFunc(tags, keys) {
       if (!content.match(/^\(.*\)$/)) {
         content = `(${content})`;
       }
-      // content = replaceJudgement(content);
-      // res = content.match(varRegExp);
-      // content.split(/\s+/)
-      let tmpVariableList = 
       getVariableList(content).forEach(function(str){
         if (buffer.indexOf(str) < 0) {
           tpls.push(`var ${str};`);

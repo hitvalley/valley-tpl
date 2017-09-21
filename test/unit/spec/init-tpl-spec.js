@@ -31,7 +31,7 @@ describe('test init tpl spec', () => {
     }];
     res = [
       'var vtmpArr = [];',
-      'vtmpArr.push(this.date_str(timestamp));',
+      '(function(scope){vtmpArr.push(scope.date_str(timestamp));}(self));',
       'return vtmpArr.join("");'
     ];
     expect(initTpl(tags2)).toEqual(res);
@@ -42,7 +42,7 @@ describe('test init tpl spec', () => {
     }];
     res = [
       'var vtmpArr = [];',
-      '(function(scope){var args=[1,"test",m,"info,info2"];args.unshift(timestamp);vtmpArr.push(scope.date_str.apply(scope, args));}(this));',
+      '(function(scope){var args=[1,"test",m,"info,info2"];args.unshift(timestamp);vtmpArr.push(scope.date_str.apply(scope, args));}(self));',
       'return vtmpArr.join("");'
     ];
     expect(initTpl(tags3)).toEqual(res);
@@ -64,6 +64,7 @@ describe('test init tpl spec', () => {
     }];
     let res = [
       'var vtmpArr = [];',
+      'var test;',
       ';if (test === 1) {',
       'vtmpArr.push(\'yes\');',
       '} else {',
@@ -85,6 +86,7 @@ describe('test init tpl spec', () => {
     }];
     let res = [
       'var vtmpArr = [];',
+      'var i;',
       ';for (var i = 0; i < 10; i ++) {',
       'vtmpArr.push(typeof arr[i] === "number" ? arr[i] : (arr[i] || ""));',
       '}',
@@ -159,13 +161,14 @@ describe('test init tpl spec', () => {
     }];
     let res = [
       'var vtmpArr = [];',
+      'var i;',
       ';for (var i in obj) {',
       'vtmpArr.push(typeof obj[i].key === "number" ? obj[i].key : (obj[i].key || ""));',
       'vtmpArr.push(typeof obj[i].value === "number" ? obj[i].value : (obj[i].value || ""));',
       '}',
       'return vtmpArr.join("");'
     ];
-    expect(initTpl(tags)).toEqual(res);
+    expect(initTpl(tags, ['obj'])).toEqual(res);
   });
 });
 

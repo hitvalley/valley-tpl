@@ -23,7 +23,7 @@ function ValleyTpl(tpl, data, scope) {
   res = analyzeTag(res);
 
   // 生成模板语言
-  res = initTpl(res);
+  res = initTpl(res, keys);
 
   // 生成模板函数
   res = initFunc(res, keys, hackObj);

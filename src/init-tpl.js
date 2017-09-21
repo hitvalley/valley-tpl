@@ -2,7 +2,8 @@ import sprintf from './utils/sprintf';
 import {
   analyzeFilter,
   tagRegExp,
-  varRegExp
+  varRegExp,
+  getVariableList
 } from './utils/regexp-obj';
 
 const stringTpl = 'vtmpArr.push(\'%s\');';
@@ -46,8 +47,9 @@ function isBlackVariable(key) {
   return varBlackList.indexOf(key) >= 0;
 }
 
-export default function initTplFunc(tags) {
+export default function initTplFunc(tags, keys) {
   let tpls = ['var vtmpArr = [];'];
+  let buffer = keys || [];
   tags.forEach(tag => {
     let content = (tag.content || '').trim();
     let res;
@@ -74,6 +76,14 @@ export default function initTplFunc(tags) {
       }
       // content = replaceJudgement(content);
       // res = content.match(varRegExp);
+      // content.split(/\s+/)
+      let tmpVariableList = 
+      getVariableList(content).forEach(function(str){
+        if (buffer.indexOf(str) < 0) {
+          tpls.push(`var ${str};`);
+          buffer.push(str);
+        }
+      });
       if (tag.type === 'elseif') {
         tpls.push(`} else if ${content} {`);
       } else {

@@ -43,6 +43,16 @@ const hackOpen = `${tagOpen}hack${tagClose}`;
 const hackClose = `${tagOpen}/hack${tagClose}`;
 const hackBlockRegExp = new RegExp(`${hackOpen}((?:.|[\r\n])*?)${hackClose}`, 'igm');
 
+// check variable
+const keywordList = ['===', '==', '>', '>=', '<', '<=', '']
+const judgeWords = '[\\+\\-\\*\\\/%!\\?\\|\\^&~<>=,\\(\\)\\[\\];]+'
+const stopWords = 'break|case|catch|continue|default|delete|do|else|finally|for|function|if|in|instanceof|new|return|switch|this|throw|try|typeof|var|void|while|with|abstract|boolean|byte|char|class|const|debugger|double|enum|export|extends|final|float|goto|implements|import|int|interface|long|native|package|private|protected|public|short|static|super|synchronized|throws|transient|volatile|as|each|let|const';
+const stopwordRegExp = new RegExp(`\\s*\\b(?:${stopWords})\\b\\s*|\\s*${judgeWords}\\s*`, 'ig');
+function getVariableList(content) {
+  // console.log(content, content.split(stopwordRegExp))
+  return content.split(stopwordRegExp).filter(item =>  item && !item.match(/^\d+$/)).map(item => item.split(/\./g)[0]);
+}
+
 export {
   filterRegExp,
   analyzeFilter,
@@ -51,5 +61,6 @@ export {
   extendRegExp,
   blockRegExp,
   tagRegExp,
-  varRegExp
+  varRegExp,
+  getVariableList
 };

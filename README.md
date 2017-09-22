@@ -82,6 +82,24 @@ ValleyTpl引入
 	  ...
 	{{/each}}
 
+不执行代码片段：hack
+
+所有被hack包裹的片段将不执行，方便在一个模板中同时写浏览器模板和服务器模板
+
+	{{hack}}
+	  ...
+	{{/hack}}
+
+模板的继承：extends/block //类似于smarty的继承
+
+	{{extends parent}}
+	  ...
+	{{block block_name}}{{/block}}
+
+	{{block block_name}}
+	 ...
+	{{/block}}
+
 ## 近期计划
 
 1. 加入对于Express的支持插件

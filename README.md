@@ -38,7 +38,13 @@ ValleyTpl引入
 
 调用
 
-	vtpl(tpl, data);// 返回值为promise
+	// run in async function
+	let tplContent = await vtpl.prepareTpl(tpl);
+	vtpl(tplContent, data);
+
+或者
+
+	vtpl.prepareTpl(tpl).then(tplContent => vtpl(tplContent, data));
 
 ## API
 
@@ -57,6 +63,7 @@ ValleyTpl引入
 	vtpl.unregister('functionName')
 
 已有过滤器
+
 	htmlspecialchars // 将特殊字符转换为 HTML 实体
 	datestr // 根据要求提供时间展示
 

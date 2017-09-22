@@ -12,7 +12,7 @@ ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的
 
 	npm i
 
-### Browser
+### Run in Browser
 
 生成valleytpl.js
 
@@ -26,7 +26,7 @@ ValleyTpl引入
 
 	vtpl(tpl, data);
 
-### NodeJS
+### Run in NodeJS
 
 生成vtpl-node.js
 

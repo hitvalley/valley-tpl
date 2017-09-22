@@ -1,5 +1,4 @@
 # ValleyTpl
-JavaScript Template Engine For ValleyJS
 
 当前版本：0.1
 
@@ -83,4 +82,7 @@ ValleyTpl引入
 	  ...
 	{{/each}}
 
+## 近期计划
 
+1. 加入对于Express的支持插件
+2. 加入对于Koa的支持插件

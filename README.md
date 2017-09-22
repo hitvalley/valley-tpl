@@ -92,9 +92,13 @@ ValleyTpl引入
 
 模板的继承：extends/block //类似于smarty的继承
 
+父模板
+
 	{{extends parent}}
 	  ...
 	{{block block_name}}{{/block}}
+
+子模板
 
 	{{block block_name}}
 	 ...

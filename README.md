@@ -11,48 +11,76 @@ ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的
 
 ### 初始化
 
-  npm i
+	npm i
 
 ### Browser
 
 生成valleytpl.js
 
-  npm run build-plus
+	npm run build-plus
 
 ValleyTpl引入
 
-  <script src="dist/valleytpl.js"></script>
+	<script src="dist/valleytpl.js"></script>
 
 调用
 
-  vtpl(tpl, data);
+	vtpl(tpl, data);
 
 ### NodeJS
 
 生成vtpl-node.js
 
-  npm run build-plus-node
+	npm run build-plus-node
 
 引用
 
-  const vtpl = require('./dist/vtpl-node.js');
+	const vtpl = require('./dist/vtpl-node.js');
 
 调用
 
-  vtpl(tpl, data);// 返回值为promise
+	vtpl(tpl, data);// 返回值为promise
 
 ## API
 
-变量打印
+变量
 
-  {{name}}
+	{{name}} // 变量输出
+	{{name|filter}} // 过滤器
+	{{name|filter:1,"a"}} // 含有输入的过滤器，name为filter的第一个输入值
 
-if ... else if ... else
+增加过滤器
 
-  {{if a === 1}}
-     ...
-  {{elseif b === 1}}
-     ...
-  {{else}}
-    ...
-  {{/if}}
+	vtpl.register('functionName', function)
+
+删除过滤器
+
+	vtpl.unregister('functionName')
+
+已有过滤器
+	htmlspecialchars // 将特殊字符转换为 HTML 实体
+	datestr // 根据要求提供时间展示
+
+判断：if ... else if ... else
+
+	{{if a === 1}}
+		...
+	{{elseif b === 1}}
+		...
+	{{else}}
+		...
+	{{/if}}
+
+循环：for
+
+	{{for i = 0; i < list.length; i ++}}
+		...
+	{{/for}}
+
+循环：each
+
+	{{each list as item , index}}
+		...
+	{{/each}}
+
+

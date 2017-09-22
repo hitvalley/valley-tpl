@@ -64,8 +64,8 @@ ValleyTpl引入
 
 已有过滤器
 
-	htmlspecialchars // 将特殊字符转换为 HTML 实体
-	datestr // 根据要求提供时间展示
+	* htmlspecialchars // 将特殊字符转换为 HTML 实体
+	* datestr // 根据要求提供时间展示
 
 ### 2. 判断
 

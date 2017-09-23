@@ -111,6 +111,22 @@ ValleyTpl引入
 	 ...
 	{{/block}}
 
+## 对于NodeJS框架的支持
+
+### 支持Koa2
+
+生成中间件
+
+	npm run build-koa2
+
+使用
+
+	const views = require('./vtpl-koa2');
+	app.use(views(viewPath, {
+	  extension: ...
+	  encoding: ...
+	}));
+
 ## 近期计划
 
 1. 加入对于Express的支持插件

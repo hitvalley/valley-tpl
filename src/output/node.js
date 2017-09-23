@@ -1,5 +1,6 @@
 import vtpl from '../index';
 import prepareTpl from '../prepare-tpl';
+import extend from '../utils/extend';
 
 vtpl.config = {
   encoding: 'utf-8',

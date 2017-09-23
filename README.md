@@ -48,7 +48,7 @@ ValleyTpl引入
 
 ## API
 
-变量
+### 1. 变量
 
 	{{name}} // 变量输出
 	{{name|filter}} // 过滤器
@@ -64,10 +64,12 @@ ValleyTpl引入
 
 已有过滤器
 
-	htmlspecialchars // 将特殊字符转换为 HTML 实体
-	datestr // 根据要求提供时间展示
+	* htmlspecialchars // 将特殊字符转换为 HTML 实体
+	* datestr // 根据要求提供时间展示
 
-判断：if ... else if ... else
+### 2. 判断
+
+if ... else if ... else
 
 	{{if a === 1}}
 	  ...
@@ -77,19 +79,23 @@ ValleyTpl引入
 	  ...
 	{{/if}}
 
-循环：for
+### 3. 循环
+
+for
 
 	{{for i = 0; i < list.length; i ++}}
 	  ...
 	{{/for}}
 
-循环：each
+each
 
 	{{each list as item , index}}
 	  ...
 	{{/each}}
 
-不执行代码片段：hack
+### 4. 不执行代码片段
+
+hack
 
 所有被hack包裹的片段将不执行，方便在一个模板中同时写浏览器模板和服务器模板
 
@@ -97,7 +103,9 @@ ValleyTpl引入
 	  ...
 	{{/hack}}
 
-模板的继承：extends/block //类似于smarty的继承
+### 5. 模板的继承
+
+extends/block //类似于smarty的继承
 
 父模板
 

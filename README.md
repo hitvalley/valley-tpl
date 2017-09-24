@@ -121,6 +121,20 @@ extends/block //类似于smarty的继承
 
 ## 对于NodeJS框架的支持
 
+### 支持Koa1
+
+生成中间件
+
+	npm run build-koa
+
+使用
+
+	const views = require('./vtpl-koa');
+	app.use(views(viewPath, {
+	  extension: ...
+	  encoding: ...
+	}));
+
 ### 支持Koa2
 
 生成中间件
@@ -138,4 +152,3 @@ extends/block //类似于smarty的继承
 ## 近期计划
 
 1. 加入对于Express的支持插件
-2. 加入对于Koa的支持插件

@@ -1,7 +1,7 @@
 {
   "name": "valley_tpl",
   "version": "1.0.0",
-  "description": "valley tpl",
+  "description": "valley tpl: Template Engine lib on browser and nodejs",
   "main": "tpl-forvalleyjs.js",
   "directories": {
     "test": "test"
@@ -24,7 +24,11 @@
     "type": "git",
     "url": "gito:valley_tpl.git"
   },
-  "keywords": [],
+  "keywords": [
+    "template",
+    "template engine",
+    "nodejs"
+  ],
   "author": "valley",
   "email": "hit.gutianyu@gmail.com",
   "license": "ISC",

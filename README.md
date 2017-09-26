@@ -18,9 +18,14 @@ ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的
 
 	npm run build-plus
 
+生成valleytpl.min.js
+
+	npm run build-web
+
 ValleyTpl引入
 
 	<script src="dist/valleytpl.js"></script>
+	<script src="dist/valleytpl.min.js"></script>
 
 调用
 
@@ -139,6 +144,9 @@ extends/block //类似于smarty的继承
 	  extension: ...
 	  encoding: ...
 	}));
+	app.use(function*() {
+	  yield this.render(tpl, data, filters);
+	});
 
 ### 支持Koa2
 
@@ -153,7 +161,26 @@ extends/block //类似于smarty的继承
 	  extension: ...
 	  encoding: ...
 	}));
+	app.use(async (ctx, next) => {
+	  await ctx.render(tpl, data, filters);
+	});
+
+### 支持Express
+
+安装
+
+	npm i --save vtpl-express
+
+使用
+
+	app.set('view engine', 'vtpl');
+	app.set('views', './views');
+	app.set('view extension', 'tpl'); // 设定文件后缀名
+	app.set('view encoding', 'utf-8'); // 设定文件编码格式
+	app.get('/', function(req, res){
+	  res.render(tpl, data, filters);
+	});
 
 ## 近期计划
 
-1. 加入对于Express的支持插件
+* 加入Cache

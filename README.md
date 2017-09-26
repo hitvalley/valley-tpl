@@ -131,6 +131,12 @@ extends/block //类似于smarty的继承
 	 ...
 	{{/block}}
 
+### 6.模板引用
+
+引用模板common.tpl
+
+	{{include common}}
+
 ## 对于NodeJS框架的支持
 
 ### 支持Koa1

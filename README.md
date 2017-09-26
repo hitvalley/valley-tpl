@@ -4,6 +4,8 @@
 
 ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的。因此，该引擎目前可以在 Browser 和 NodeJS 两个终端执行。
 
+目前已经加入了对于Express\Koa\koa2三个框架支持，方便开发。
+
 问题：但对于 MVVM 的支持较难。因此，后续改进方向将是：在客户端采用 DomBased 方式实现，以支持 MVVM，而在服务器端采用 StringBased 方式实现。
 
 ## 使用

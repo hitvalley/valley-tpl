@@ -7,7 +7,11 @@ export default function getContent(tplName, config) {
   let extension = config.extension || 'tpl';
 
   return new Promise(function(resolve, reject){
-    fs.readFile(join(viewPath, `${tplName}.${extension}`), {
+    let viewName = `${tplName}.${extension}`;
+    if (viewName.indexOf('/') !== 0) {
+      viewName = join(viewPath, viewName);
+    }
+    fs.readFile(viewName, {
       encoding: encoding,
       flag: 'r'
     }, (err, data) => {

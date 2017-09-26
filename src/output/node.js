@@ -22,9 +22,8 @@ vtpl.setConfig = function(conf) {
   });
 };
 
-
-vtpl.prepareTpl = function(tplName){
-  return prepareTpl(tplName, this.config);
+vtpl.prepareTpl = function(tplName, config){
+  return prepareTpl(tplName, config ? Object.assign({}, this.config, config) : this.config);
 };
 
 export default vtpl;

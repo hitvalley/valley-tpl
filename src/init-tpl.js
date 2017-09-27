@@ -71,15 +71,15 @@ export default function initTplFunc(tags, keys) {
     case 'if':
     case 'for':
     case 'elseif':
-      if (!content.match(/^\(.*\)$/)) {
-        content = `(${content})`;
-      }
       getVariableList(content).forEach(function(str){
         if (buffer.indexOf(str) < 0) {
-          tpls.push(`var ${str};`);
+          tpls.push(`;if (${str} === undefined) { var ${str}; }`);
           buffer.push(str);
         }
       });
+      if (!content.match(/^\(.*\)$/)) {
+        content = `(${content})`;
+      }
       if (tag.type === 'elseif') {
         tpls.push(`} else if ${content} {`);
       } else {

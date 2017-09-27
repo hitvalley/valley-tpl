@@ -12,3 +12,12 @@ export default function hackBlock(content, hackObj) {
     return key;
   });
 }
+
+function replaceHack(tags, hackObj) {
+  let hackRegExp = new RegExp(`<<HACK_MARK_\\d+>>`, 'g');
+  content = content.replace(hackRegExp, $0 => {
+    return hackObj[$0].replace(/[\r\n]/g, '\\n').replace(/'/g, "\\'");
+  });
+  return content;
+}
+

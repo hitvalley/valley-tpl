@@ -64,7 +64,7 @@ describe('test init tpl spec', () => {
     }];
     let res = [
       'var vtmpArr = [];',
-      'var test;',
+      ';if (test === undefined) { var test; }',
       ';if (test === 1) {',
       'vtmpArr.push(\'yes\');',
       '} else {',
@@ -86,7 +86,7 @@ describe('test init tpl spec', () => {
     }];
     let res = [
       'var vtmpArr = [];',
-      'var i;',
+      ';if (i === undefined) { var i; }',
       ';for (var i = 0; i < 10; i ++) {',
       'vtmpArr.push(typeof arr[i] === "number" ? arr[i] : (arr[i] || ""));',
       '}',
@@ -161,7 +161,7 @@ describe('test init tpl spec', () => {
     }];
     let res = [
       'var vtmpArr = [];',
-      'var i;',
+      ';if (i === undefined) { var i; }',
       ';for (var i in obj) {',
       'vtmpArr.push(typeof obj[i].key === "number" ? obj[i].key : (obj[i].key || ""));',
       'vtmpArr.push(typeof obj[i].value === "number" ? obj[i].value : (obj[i].value || ""));',

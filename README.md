@@ -29,6 +29,10 @@ ValleyTpl引入
 	<script src="dist/valleytpl.js"></script>
 	<script src="dist/valleytpl.min.js"></script>
 
+设置缓存
+
+	vtpl.useCache = true; // 默认值为true，设置为false时缓存不生效，缓存目前为页面级别
+
 调用
 
 	vtpl(tpl, data);
@@ -52,6 +56,14 @@ ValleyTpl引入
 或者
 
 	vtpl.prepareTpl(tpl).then(tplContent => vtpl(tplContent, data));
+
+设置
+
+	vtp.setConfig({
+	  extension, // 扩展名，默认为xtpl
+	  encoding, // 编码格式，默认为utf-8
+	  useCache, // 默认为true，即使用cache
+	})
 
 ## API
 
@@ -151,6 +163,7 @@ extends/block //类似于smarty的继承
 	app.use(views(viewPath, {
 	  extension: ...
 	  encoding: ...
+	  cache: ...
 	}));
 	app.use(function*() {
 	  yield this.render(tpl, data, filters);
@@ -168,6 +181,7 @@ extends/block //类似于smarty的继承
 	app.use(views(viewPath, {
 	  extension: ...
 	  encoding: ...
+	  cache: ...
 	}));
 	app.use(async (ctx, next) => {
 	  await ctx.render(tpl, data, filters);
@@ -185,6 +199,7 @@ extends/block //类似于smarty的继承
 	app.set('views', './views');
 	app.set('view extension', 'tpl'); // 设定文件后缀名
 	app.set('view encoding', 'utf-8'); // 设定文件编码格式
+	app.set('view cache', true); // 设定是否使用cache
 	app.get('/', function(req, res){
 	  res.render(tpl, data, filters);
 	});

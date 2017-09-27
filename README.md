@@ -13,6 +13,7 @@ ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的
 ### 初始化
 
 	npm i
+	npm test
 
 ### Run in Browser
 

@@ -205,6 +205,3 @@ extends/block //类似于smarty的继承
 	  res.render(tpl, data, filters);
 	});
 
-## 近期计划
-
-* 加入Cache

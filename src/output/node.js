@@ -20,7 +20,7 @@ vtpl.setConfig = function(conf) {
       self.config[key] = typeof conf[key] === 'object' ? extend({}, self.config[key], conf[key]) : conf[key];
     }
   });
-  vtpl.useCache = config.useCache === undefined ? true : config.useCache;
+  vtpl.useCache = conf.useCache === undefined ? true : conf.useCache;
 };
 
 vtpl.prepareTpl = function(tplName, config){

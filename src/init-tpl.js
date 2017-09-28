@@ -47,9 +47,11 @@ function isBlackVariable(key) {
   return varBlackList.indexOf(key) >= 0;
 }
 
-export default function initTplFunc(tags, keys) {
+export default function initTplFunc(tags) {
   let tpls = ['var vtmpArr = [];'];
-  let buffer = keys || [];
+  let buffer = [];
+  // tpls.push('var __args_match_res = arguments.callee.toString().match(/function\s+.*?\((.*?)\)/;');
+  // tpls.push('var __vargs = (__args_match_res && __args_match_res[0] || "").split(/\s*,\s*/);');
   tags.forEach(tag => {
     let content = (tag.content || '').trim();
     let res;

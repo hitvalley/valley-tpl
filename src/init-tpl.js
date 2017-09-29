@@ -61,6 +61,11 @@ export default function initTplFunc(tags) {
       break;
     case 'var':
       let filterObj = analyzeFilter(content);
+      let localVariable = (filterObj.variable || '').split(/\./)[0];
+      if (buffer.indexOf(localVariable)) {
+        tpls.unshift(`var ${localVariable} = ${localVariable};`);
+        buffer.push(localVariable);
+      }
       if (!filterObj.filter) {
         tpls.push(sprintf(variableTpl, content));
       } else if (filterObj.args.length <= 0) {

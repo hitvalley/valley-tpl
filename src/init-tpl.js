@@ -50,8 +50,8 @@ function isBlackVariable(key) {
 export default function initTplFunc(tags) {
   let tpls = ['var vtmpArr = [];'];
   let buffer = [];
-  // tpls.push('var __args_match_res = arguments.callee.toString().match(/function\s+.*?\((.*?)\)/;');
-  // tpls.push('var __vargs = (__args_match_res && __args_match_res[0] || "").split(/\s*,\s*/);');
+  tpls.push('var __args_match_res = arguments.callee.toString().match(/function\s+.*?\((.*?)\)/);');
+  tpls.push('var __vargs = (__args_match_res && __args_match_res[0] || "").split(/\s*,\s*/);');
   tags.forEach(tag => {
     let content = (tag.content || '').trim();
     let res;
@@ -75,7 +75,8 @@ export default function initTplFunc(tags) {
     case 'elseif':
       getVariableList(content).forEach(function(str){
         if (buffer.indexOf(str) < 0) {
-          tpls.push(`;if (${str} === undefined) { var ${str}; }`);
+          // tpls.unshift(`;if (${str} === undefined) { var ${str}; }`);
+          tpls.unshift(`var ${str} = ${str};`);
           buffer.push(str);
         }
       });
@@ -117,9 +118,9 @@ export default function initTplFunc(tags) {
     case 'endeach':
       tpls.push('});');
       break;
-    case 'js':
-      tpls.push(`;${content};`);
-      break;
+    // case 'js':
+      // tpls.push(`;${content};`);
+      // break;
     }
   });
   tpls.push('return vtmpArr.join("");');

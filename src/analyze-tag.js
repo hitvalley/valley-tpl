@@ -66,12 +66,12 @@ export default function analyzeTag(tpl) {
           type: 'endfor'
         };
         break;
-//      case 'js':
-//        tagObj = {
-//          type: 'js',
-//          content: tagArr.join(' ')
-//        };
-//        break;
+      case 'js':
+        tagObj = {
+          type: 'js',
+          content: tagArr.join(' ')
+        };
+        break;
       default:
         tagObj = {
           type: 'var',

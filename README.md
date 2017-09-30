@@ -205,3 +205,6 @@ extends/block //类似于smarty的继承
 	  res.render(tpl, data, filters);
 	});
 
+## DEMO
+
+[KOA DEMO](https://github.com/hitvalley/koa_vtpl_demo)

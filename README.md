@@ -40,6 +40,10 @@ ValleyTpl引入
 
 ### Run in NodeJS
 
+环境
+
+	NoedeJS > 8.0
+
 生成vtpl-node.js
 
 	npm run build-plus-node

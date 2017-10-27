@@ -40,6 +40,10 @@ ValleyTpl引入
 
 ### Run in NodeJS
 
+环境
+
+	NoedeJS > 8.0
+
 生成vtpl-node.js
 
 	npm run build-plus-node
@@ -205,3 +209,6 @@ extends/block //类似于smarty的继承
 	  res.render(tpl, data, filters);
 	});
 
+## DEMO
+
+[KOA DEMO](https://github.com/hitvalley/koa_vtpl_demo)

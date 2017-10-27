@@ -10,17 +10,11 @@ let cacheObj = {};
 
 function ValleyTpl(tpl, data, scope) {
   let res;
-  let keys = Object.keys(data);
-  let values = Object.values(data);
-
-  scope = scope ? extend({}, ValleyTpl.scope, scope) : ValleyTpl.scope;
 
   if (cacheObj[tpl] && ValleyTpl.useCache) {
     // 命中缓存
     res = cacheObj[tpl];
-
   } else {
-
     // 去掉注释
     res = removeComments(tpl);
 
@@ -42,11 +36,21 @@ function ValleyTpl(tpl, data, scope) {
     }
   }
 
+  if (!data) {
+    return res;
+  }
+
+  let keys = Object.keys(data);
+  let values = Object.values(data);
+
+  scope = scope ? extend({}, ValleyTpl.scope, scope) : ValleyTpl.scope;
+
   // 生成模板函数
   res = initFunc(res, keys);
 
   // 执行模板函数
   res = res.apply(scope, values);
+
   return res;
 }
 

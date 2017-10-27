@@ -20,6 +20,7 @@ describe('test init tpl spec', () => {
       content: 'str'
     }];
     res = [
+      'var str = str;',
       'var vtmpArr = [];',
       'vtmpArr.push(typeof str === "number" ? str : (str || ""));',
       'return vtmpArr.join("");'
@@ -30,6 +31,7 @@ describe('test init tpl spec', () => {
       content: 'timestamp|date_str'
     }];
     res = [
+      'var timestamp = timestamp;',
       'var vtmpArr = [];',
       '(function(scope){vtmpArr.push(scope.date_str(timestamp));}(self));',
       'return vtmpArr.join("");'
@@ -41,6 +43,7 @@ describe('test init tpl spec', () => {
       content: 'timestamp|date_str:1,"test",m,"info,info2"'
     }];
     res = [
+      'var timestamp = timestamp;',
       'var vtmpArr = [];',
       '(function(scope){var args=[1,"test",m,"info,info2"];args.unshift(timestamp);vtmpArr.push(scope.date_str.apply(scope, args));}(self));',
       'return vtmpArr.join("");'
@@ -63,8 +66,8 @@ describe('test init tpl spec', () => {
       type: 'endif'
     }];
     let res = [
+      'var test = test;',
       'var vtmpArr = [];',
-      ';if (test === undefined) { var test; }',
       ';if (test === 1) {',
       'vtmpArr.push(\'yes\');',
       '} else {',
@@ -85,8 +88,9 @@ describe('test init tpl spec', () => {
       type: 'endfor'
     }];
     let res = [
+      'var arr = arr;',
+      'var i = i;',
       'var vtmpArr = [];',
-      ';if (i === undefined) { var i; }',
       ';for (var i = 0; i < 10; i ++) {',
       'vtmpArr.push(typeof arr[i] === "number" ? arr[i] : (arr[i] || ""));',
       '}',
@@ -114,6 +118,8 @@ describe('test init tpl spec', () => {
       type: 'endeach'
     }];
     let res = [
+      'var item = item;',
+      'var index = index;',
       'var vtmpArr = [];',
       'Object.keys(list).forEach(function(index){var item = list[index];',
       'vtmpArr.push(typeof index === "number" ? index : (index || ""));',
@@ -124,6 +130,7 @@ describe('test init tpl spec', () => {
       'return vtmpArr.join("");'
     ];
     let res2 = [
+      'var item = item;',
       'var vtmpArr = [];',
       'Object.values(list).forEach(function(item){',
       'vtmpArr.push(typeof item === "number" ? item : (item || ""));',
@@ -160,8 +167,9 @@ describe('test init tpl spec', () => {
       type: 'endfor'
     }];
     let res = [
+      'var obj = obj;',
+      'var i = i;',
       'var vtmpArr = [];',
-      ';if (i === undefined) { var i; }',
       ';for (var i in obj) {',
       'vtmpArr.push(typeof obj[i].key === "number" ? obj[i].key : (obj[i].key || ""));',
       'vtmpArr.push(typeof obj[i].value === "number" ? obj[i].value : (obj[i].value || ""));',

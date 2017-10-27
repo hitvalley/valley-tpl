@@ -50,8 +50,8 @@ function isBlackVariable(key) {
 export default function initTplFunc(tags) {
   let tpls = ['var vtmpArr = [];'];
   let buffer = [];
-  tpls.push('var __args_match_res = arguments.callee.toString().match(/function\s+.*?\((.*?)\)/);');
-  tpls.push('var __vargs = (__args_match_res && __args_match_res[0] || "").split(/\s*,\s*/);');
+  // tpls.push('var __args_match_res = arguments.callee.toString().match(/function\s+.*?\((.*?)\)/);');
+  // tpls.push('var __vargs = (__args_match_res && __args_match_res[0] || "").split(/\s*,\s*/);');
   tags.forEach(tag => {
     let content = (tag.content || '').trim();
     let res;
@@ -61,8 +61,8 @@ export default function initTplFunc(tags) {
       break;
     case 'var':
       let filterObj = analyzeFilter(content);
-      let localVariable = (filterObj.variable || '').split(/\./)[0];
-      if (buffer.indexOf(localVariable)) {
+      let localVariable = (filterObj.variable || '').split(/[\.\[\]]/)[0];
+      if (buffer.indexOf(localVariable) < 0) {
         tpls.unshift(`var ${localVariable} = ${localVariable};`);
         buffer.push(localVariable);
       }

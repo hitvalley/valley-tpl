@@ -16,6 +16,7 @@
     "build-koa2": "rollup src/output/koa2-view.js --format cjs --name \"vtpl\" --output dist/vtpl-koa2.js",
     "build-koa": "rollup src/output/koa-view.js --format cjs --name \"vtpl\" --output dist/vtpl-koa.js",
     "build-express": "rollup src/output/express-view.js --format cjs --name \"vtpl\" --output dist/vtpl-express.js",
+    "build-vm": "rollup src/output/vm-view.js --format umd --name RenderModule --output dist/valleymodule-tpl.js",
     "node": "rollup src/tpl-node.js -c rollup.config.js",
     "dev": "node_modules/.bin/rollup -c",
     "demo": "nodemon --exec node_modules/.bin/babel-node demo.js",

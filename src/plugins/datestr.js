@@ -2,7 +2,7 @@ const DefaultTPL = 'Y-M-D H:I:S';
 
 export default function datestr(timestamp, tpl) {
   let date;
-  if (typeof timestamp === 'string') {
+  if (typeof timestamp === 'string' && isNaN(timestamp)) {
     tpl = timestamp;
     timestamp = new Date();
   }

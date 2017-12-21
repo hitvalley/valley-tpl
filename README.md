@@ -209,6 +209,35 @@ extends/block //类似于smarty的继承
 	  res.render(tpl, data, filters);
 	});
 
+## 支持ValleyModule
+
+ValleyModule相关信息：https://github.com/hitvalley/valley_module
+DEMO位置：https://github.com/hitvalley/valley_module_demo/blob/master/static/demo2.html
+
+生成库文件
+
+	npm run build-vm
+
+文件位置
+
+	dist/valleymodule-tpl.js
+
+使用方法
+
+	class MainModule extends ValleyModule {
+	  prepare() {
+	    ...
+	    this.use('prepareRender', RenderModule); // 引入
+	    ...
+	    this.use('render', async next => {
+	      let html = this.context.render(tpl, data, scope);// 调用
+	      ...
+	    })
+	  }
+	}
+	let mainModule = new MainModule();
+	...
+
 ## DEMO
 
 [KOA DEMO](https://github.com/hitvalley/koa_vtpl_demo)

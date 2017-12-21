@@ -212,6 +212,7 @@ extends/block //类似于smarty的继承
 ## 支持ValleyModule
 
 ValleyModule相关信息：https://github.com/hitvalley/valley_module
+
 DEMO位置：https://github.com/hitvalley/valley_module_demo/blob/master/static/demo2.html
 
 生成库文件

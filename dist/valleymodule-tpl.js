@@ -1,8 +1,8 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.RenderModule = factory());
-}(this, (function () { 'use strict';
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var ValleyModule = _interopDefault(require('valley-module'));
 
 /**
  * 去掉注释
@@ -58,7 +58,6 @@ function getVariableList(content) {
 }
 
 function hackBlock(content, hackObj) {
-  let res;
   let mark = 0;
   return content.replace(hackBlockRegExp, function($0, $1){
     let key = `<<HACK_MARK_${mark}>>`;
@@ -251,7 +250,6 @@ function initTplFunc(tags) {
   // tpls.push('var __vargs = (__args_match_res && __args_match_res[0] || "").split(/\s*,\s*/);');
   tags.forEach(tag => {
     let content = (tag.content || '').trim();
-    let res;
     switch (tag.type) {
     case 'string':
       tpls.push(sprintf(stringTpl, tag.content.replace(/[\r\n]+/g, '\\n').replace(/'/g, "\\'")));
@@ -552,6 +550,4 @@ class RenderModule extends ValleyModule {
   }
 }
 
-return RenderModule;
-
-})));
+module.exports = RenderModule;

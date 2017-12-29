@@ -8,7 +8,8 @@
   },
   "scripts": {
     "rollup": "node_modules/.bin/rollup",
-    "build": "rollup src/index.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
+    "build-single": "rollup src/index.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
+    "build": "rollup --config rollup.node.config.js",
     "build-web": "rollup -c rollup.config.js",
     "build-node": "rollup src/output/node.js --format cjs --name \"Valley\" --output dist/vtpl-node.js",
     "build-plus": "rollup src/output/index-plus.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
@@ -53,7 +54,6 @@
     "rollup-plugin-uglify": "^2.0.1"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
-    "rollup": "^0.43.1"
+    "rollup": "^0.53.1"
   }
 }

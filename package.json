@@ -2,7 +2,7 @@
   "name": "valley_tpl",
   "version": "1.0.0",
   "description": "valley tpl",
-  "main": "tpl-forvalleyjs.js",
+  "main": "dist/valleymodule-tpl.js",
   "directories": {
     "test": "test"
   },
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "gito:valley_tpl.git"
+    "url": "gito:valley-tpl.git"
   },
   "keywords": [],
   "author": "valley",

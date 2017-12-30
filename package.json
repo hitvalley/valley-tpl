@@ -1,6 +1,6 @@
 {
   "name": "valley-tpl",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "valley tpl",
   "main": "dist/valleymodule-tpl.js",
   "directories": {

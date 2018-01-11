@@ -7,14 +7,30 @@ import ValleyModule from 'valley-module';
 vtpl.register('datestr', datestr);
 vtpl.register('htmlspecialchars', htmlspecialchars);
 
+let defaultConfig = {
+  extension: 'tpl',
+  encoding: 'utf-8'
+}
+
 class RenderModule extends ValleyModule {
+  constructor(input) {
+    let conf = Object.assign({}, defaultConfig, config, {
+      viewPath: input.viewPath || './'
+    });
+    vtpl.setConfig(conf);
+  }
   prepare() {
     this.use('prepareRender', async next => {
-      this.context.registerv = vtpl.register;
-      this.context.render = (tpl, data, scope) => {
-        let html = vtpl(tpl, data, scope);
+      this.context.register = vtpl.register;
+      this.context.render = async (tpl, data, scope) => {
+        let tplContent = await vtpl.prepareTpl(tpl).catch(e => {
+          throw e;
+        });
+        let html = vtpl(tplContent, data || {}, scope || {});
         return html;
       };
+      this.render = this.render || this.context.render;
+      this.register = this.register || this.context.register;
       await next();
     });
   }

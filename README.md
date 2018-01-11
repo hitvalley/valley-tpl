@@ -225,10 +225,15 @@ DEMO位置：https://github.com/hitvalley/valley_module_demo/blob/master/static/
 
 使用方法
 
+	const renderModule = new RenderModule({
+	  viewPath: './dist/',
+	  extension: 'tpl',
+	  encoding: 'utf-8'
+	});
 	class MainModule extends ValleyModule {
 	  prepare() {
 	    ...
-	    this.use('prepareRender', RenderModule); // 引入
+	    this.use('prepareRender', renderModule); // 引入
 	    ...
 	    this.use('render', async next => {
 	      let html = this.context.render(tpl, data, scope);// 调用

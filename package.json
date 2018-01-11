@@ -12,7 +12,7 @@
     "build": "rollup --config rollup.node.config.js",
     "build-web": "rollup -c rollup.config.js",
     "build-node": "rollup src/output/node.js --format cjs --name \"Valley\" --output dist/vtpl-node.js",
-    "build-plus": "rollup src/output/index-plus.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
+    "build-plus": "rollup --config rollup.web.config.js",
     "build-plus-node": "rollup src/output/node-plus.js --format cjs --name \"vtpl\" --output dist/vtpl-node.js",
     "build-koa2": "rollup src/output/koa2-view.js --format cjs --name \"vtpl\" --output dist/vtpl-koa2.js",
     "build-koa": "rollup src/output/koa-view.js --format cjs --name \"vtpl\" --output dist/vtpl-koa.js",

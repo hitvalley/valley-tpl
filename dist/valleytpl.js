@@ -1,8 +1,8 @@
-'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var ValleyModule = _interopDefault(require('valley-module'));
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.vtpl = factory());
+}(this, (function () { 'use strict';
 
 /**
  * 去掉注释
@@ -537,33 +537,6 @@ function htmlspecialchars(str) {
 ValleyTpl.register('datestr', datestr);
 ValleyTpl.register('htmlspecialchars', htmlspecialchars);
 
-let defaultConfig = {
-  extension: 'tpl',
-  encoding: 'utf-8'
-};
+return ValleyTpl;
 
-class RenderModule extends ValleyModule {
-  constructor(input) {
-    let conf = Object.assign({}, defaultConfig, config, {
-      viewPath: input.viewPath || './'
-    });
-    ValleyTpl.setConfig(conf);
-  }
-  prepare() {
-    this.use('prepareRender', async next => {
-      this.context.register = ValleyTpl.register;
-      this.context.render = async (tpl, data, scope) => {
-        let tplContent = await ValleyTpl.prepareTpl(tpl).catch(e => {
-          throw e;
-        });
-        let html = ValleyTpl(tplContent, data || {}, scope || {});
-        return html;
-      };
-      this.render = this.render || this.context.render;
-      this.register = this.register || this.context.register;
-      await next();
-    });
-  }
-}
-
-module.exports = RenderModule;
+})));

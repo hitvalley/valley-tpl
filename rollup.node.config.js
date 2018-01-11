@@ -5,6 +5,8 @@ export default {
     format: 'cjs'
   },
   external: [
-    'valley-module'
+    'valley-module',
+    'fs',
+    'path'
   ]
 };

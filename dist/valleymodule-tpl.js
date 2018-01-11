@@ -2,6 +2,8 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var fs = _interopDefault(require('fs'));
+var path = require('path');
 var ValleyModule = _interopDefault(require('valley-module'));
 
 /**
@@ -43,6 +45,17 @@ function analyzeFilter(input) {
   }
   return obj;
 }
+
+// for include tag
+const includeRegExp = new RegExp(`${tagOpen}include\\s+([\\w.\/]+)${tagClose}`, 'igm');
+
+// for extend tag
+const extendRegExp = new RegExp(`${tagOpen}extends\\s+([\\w.\/]+)${tagClose}`, 'igm');
+
+// for block tag
+const blockOpen = `${tagOpen}block\\s+(\\w+)${tagClose}`;
+const blockClose = `${tagOpen}/block${tagClose}`;
+const blockRegExp = new RegExp(`${blockOpen}((?:.|[\r\n])*?)${blockClose}`, 'igm');
 
 // for hack block
 const hackOpen = `${tagOpen}hack${tagClose}`;
@@ -479,6 +492,97 @@ ValleyTpl.register = function(fname, func) {
 // 取消全局注册的函数
 ValleyTpl.unregister = function(fname) {
   delete this.scope[fname];
+};
+
+function getContent$2(tplName, config) {
+  let encoding = config.encoding || 'utf-8';
+  let viewPath = config.viewPath || __dirname;
+  let extension = config.extension || 'tpl';
+
+  return new Promise(function(resolve, reject){
+    let viewName = `${tplName}.${extension}`;
+    if (viewName.indexOf('/') !== 0) {
+      viewName = path.join(viewPath, viewName);
+    }
+    fs.readFile(viewName, {
+      encoding: encoding,
+      flag: 'r'
+    }, (err, data) => {
+      err ? reject(err) : resolve(data);
+    });
+  });
+}
+
+async function includeTpl(tplName, config) {
+  let content = await getContent$2(tplName, config);
+  let contentObj = {};
+  let keys = [];
+  let jobs = [];
+  let includeRes;
+  while (includeRes = includeRegExp.exec(content)) {
+    keys.push(includeRes[1]);
+    jobs.push(getContent$2(includeRes[1], config));
+  }
+  await Promise.all(jobs).then(contentRes => {
+    contentRes.forEach((res, index) => {
+      contentObj[keys[index]] = res;
+    });
+  });
+  return content.replace(includeRegExp, function($0, $1){
+    return contentObj[$1] || '';
+  });
+}
+
+async function extendTpl(tplName, config) {
+  let content = await includeTpl(tplName, config);
+  let extendObj = {};
+  let extendFile;
+  let extendRes = extendRegExp.exec(content);
+  if (extendRes && extendRes[1]) {
+    extendFile = extendRes[1];
+    content = content.replace(extendRegExp, '');
+    let res;
+    while (res = blockRegExp.exec(content)) {
+      let key = res[1];
+      let inner = res[2];
+      extendObj[key] = inner || '';
+    }
+    let extendContent = await includeTpl(extendFile, config);
+    content = extendContent.replace(blockRegExp, function($0, $1, $2){
+      return extendObj[$1] || $2;
+    });
+  }
+  return content;
+}
+
+async function prepareTpl(tplName, config) {
+  let res = await extendTpl(tplName, config);
+  return res;
+}
+
+ValleyTpl.config = {
+  encoding: 'utf-8',
+  viewPath: __dirname,
+  extension: 'tpl',
+  withExtend: true,
+  inBrowser: (function() {
+    return this !== undefined && this === this.window;
+  }())
+};
+
+// 设置配置
+ValleyTpl.setConfig = function(conf) {
+  let self = this;
+  Object.keys(self.config).forEach(key => {
+    if (conf[key]) {
+      self.config[key] = typeof conf[key] === 'object' ? extend({}, self.config[key], conf[key]) : conf[key];
+    }
+  });
+  ValleyTpl.useCache = conf.useCache === undefined ? true : conf.useCache;
+};
+
+ValleyTpl.prepareTpl = function(tplName, config){
+  return prepareTpl(tplName, config ? Object.assign({}, this.config, config) : this.config);
 };
 
 const DefaultTPL = 'Y-M-D H:I:S';

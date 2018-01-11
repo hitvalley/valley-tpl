@@ -648,7 +648,8 @@ let defaultConfig = {
 
 class RenderModule extends ValleyModule {
   constructor(input) {
-    let conf = Object.assign({}, defaultConfig, config, {
+    input = input || {};
+    let conf = Object.assign({}, defaultConfig, {
       viewPath: input.viewPath || './'
     });
     ValleyTpl.setConfig(conf);

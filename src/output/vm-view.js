@@ -7,16 +7,13 @@ import ValleyModule from 'valley-module';
 vtpl.register('datestr', datestr);
 vtpl.register('htmlspecialchars', htmlspecialchars);
 
-let defaultConfig = {
-  extension: 'tpl',
-  encoding: 'utf-8'
-}
-
 class RenderModule extends ValleyModule {
   constructor(input) {
     input = input || {};
-    let conf = Object.assign({}, defaultConfig, {
-      viewPath: input.viewPath || './'
+    let conf = Object.assign({}, {
+      viewPath: input.viewPath || './',
+      encoding: input.encoding || 'utf-8',
+      extension: input.extension || 'tpl'
     });
     vtpl.setConfig(conf);
   }

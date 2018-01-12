@@ -9,6 +9,7 @@ vtpl.register('htmlspecialchars', htmlspecialchars);
 
 class RenderModule extends ValleyModule {
   constructor(input) {
+    super(input);
     input = input || {};
     let conf = Object.assign({}, {
       viewPath: input.viewPath || './',

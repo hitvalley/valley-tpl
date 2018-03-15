@@ -123,9 +123,12 @@ export default function initTplFunc(tags) {
     case 'endeach':
       tpls.push('});');
       break;
-    // case 'js':
-      // tpls.push(`;${content};`);
-      // break;
+    case 'debug':
+      tpls.push(`;window.${content} = arguments;`);
+      break;
+    case 'js':
+      tpls.push(`;${content};`);
+      break;
     }
   });
   tpls.push('return vtmpArr.join("");');

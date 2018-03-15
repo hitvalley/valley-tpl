@@ -66,6 +66,12 @@ export default function analyzeTag(tpl) {
           type: 'endfor'
         };
         break;
+      case 'debug':
+        tagObj = {
+          type: 'debug',
+          content: tagInfo || '$data'
+        };
+        break;
       case 'js':
         tagObj = {
           type: 'js',

@@ -50,7 +50,7 @@ const stopWords = 'break|case|catch|continue|default|delete|do|else|finally|for|
 const stopwordRegExp = new RegExp(`\\s*\\b(?:${stopWords})\\b\\s*|\\s*${judgeWords}\\s*`, 'ig');
 function getVariableList(content) {
   // console.log(content, content.split(stopwordRegExp))
-  return content.split(stopwordRegExp).filter(item => item && !item.match(/^\d+$/) && !item.match(/^['"].*['"]$/)).map(item => item.split(/\./g)[0]);
+  return content.split(stopwordRegExp).filter(item => item && !item.match(/^\d+$/) && !item.match(/^['"].*['"]$/) && !item.match(/^\.+$/)).map(item => item.replace(/^\.+|\.+$/, '').split(/\./g)[0]);
 }
 
 export {

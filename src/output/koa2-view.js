@@ -18,6 +18,11 @@ export default function viewMiddleware(viewPath, config) {
       let tplContent = await vtpl.prepareTpl(tpl).catch(e => {
         throw e;
       });
+      if (data === 'html') {
+        ctx.type = 'text/html';
+        ctx.body = tplContent;
+        return;
+      }
       try {
         data = Object.assign({}, data || {}, ctx.state || {});
         let html = vtpl(tplContent, data, filters || {});

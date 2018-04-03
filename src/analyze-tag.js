@@ -72,6 +72,12 @@ export default function analyzeTag(tpl) {
           content: tagInfo || '$data'
         };
         break;
+      case 'set':
+        tagObj = {
+          type: 'set',
+          content: tagArr.join(' ')
+        };
+        break;
       case 'js':
         tagObj = {
           type: 'js',

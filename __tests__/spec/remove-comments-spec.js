@@ -1,6 +1,7 @@
 import removeComments from '../../src/remove-comments';
 let tpl1 = '***comments\n\
-test = 1';
+test = 1\n\
+***comments2';
 let tpl2 = '{*block comments\n\
 add by gty\
 block comments end*}\

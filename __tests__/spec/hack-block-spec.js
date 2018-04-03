@@ -2,7 +2,7 @@ import hackBlock from '../../src/hack-block';
 
 test('test hack', () => {
   let hackObj = {};
-  let tpl = '<script>\n{{hack}}\nvar a = 1;\nconsole.log(a);\n{{/hack}}\n</script>\n<script>{{hack}}console.log("test");{{/hack}}</script>';
+  let tpl = '<script>\n{{browser}}\nvar a = 1;\nconsole.log(a);\n{{/browser}}\n</script>\n<script>{{browser}}console.log("test");{{/browser}}</script>';
   let res = hackBlock(tpl, hackObj);
   let html = [
     '<script>',

@@ -9,6 +9,7 @@ export default function removeComments(tpl) {
   if (!tpl) {
     return '';
   }
-  return tpl.split(/[\r\n]+/g).map(line => line.replace(/\*\*\*.*$/, '')).join('\n').replace(/\{\*(.|[\r\n])*?\*\}/, '').trim();
+  // return tpl.split(/[\r\n]+/g).map(line => line.replace(/\*\*\*.*$/, '')).join('\n').replace(/\{\*(.|[\r\n])*?\*\}/, '').trim();
+  return tpl.replace(/\*\*\*.*?(?:[\r\n]+|$)/g, '').replace(/\{\*(.|[\r\n])*?\*\}/g, '').trim();
 }
 

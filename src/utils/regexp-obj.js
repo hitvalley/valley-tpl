@@ -39,8 +39,8 @@ const blockClose = `${tagOpen}/block${tagClose}`;
 const blockRegExp = new RegExp(`${blockOpen}((?:.|[\r\n])*?)${blockClose}`, 'igm');
 
 // for hack block
-const hackOpen = `${tagOpen}hack${tagClose}`;
-const hackClose = `${tagOpen}/hack${tagClose}`;
+const hackOpen = `${tagOpen}browser${tagClose}`;
+const hackClose = `${tagOpen}/browser${tagClose}`;
 const hackBlockRegExp = new RegExp(`${hackOpen}((?:.|[\r\n])*?)${hackClose}`, 'igm');
 
 // check variable

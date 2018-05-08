@@ -1,5 +1,15 @@
 const tagRegExp = /\{\{([^{}]*?)\}\}/g;
 
+/**
+  tag info
+    {{ variable }}
+    {{if judgement}} ... {{elseif/elif judgement}} ... {{else}} ... {{/if}}
+    {{each list as value, key}} ... {{/each}}
+    {{for (let i = 0; i < list.length; i++)}} ... {{/for}}
+    {{ set variable value }}
+    {{ new variable value }}
+*/
+
 export default function analyzeTag(tpl) {
   let res;
   let str;
@@ -30,6 +40,7 @@ export default function analyzeTag(tpl) {
         tagObj = {
           type: 'if',
           content: tagArr.join(' ')
+          // content: tagArr
         };
         break;
       case 'elseif':
@@ -37,6 +48,7 @@ export default function analyzeTag(tpl) {
         tagObj = {
           type: 'elseif',
           content: tagArr.join(' ')
+          // content: tagArr
         };
         break;
       case 'else':
@@ -54,6 +66,7 @@ export default function analyzeTag(tpl) {
         tagObj = {
           type: tagName,
           content: tagArr.join(' ')
+          // content: tagArr
         };
         break;
       case '/each':
@@ -66,24 +79,32 @@ export default function analyzeTag(tpl) {
           type: 'endfor'
         };
         break;
-      case 'debug':
-        tagObj = {
-          type: 'debug',
-          content: tagInfo || '$data'
-        };
-        break;
       case 'set':
         tagObj = {
           type: 'set',
           content: tagArr.join(' ')
         };
         break;
-      case 'js':
-        tagObj = {
-          type: 'js',
-          content: tagArr.join(' ')
-        };
+      // case 'new':
+      //   tagObj = {
+      //     type: 'new',
+      //     content: tagArr
+      //   };
+      //   break;
+      case 'debug':
         break;
+      // case 'debug':
+      //   tagObj = {
+      //     type: 'debug',
+      //     content: tagInfo || '$data'
+      //   };
+      //   break;
+      // case 'js':
+      //   tagObj = {
+      //     type: 'js',
+      //     content: tagArr.join(' ')
+      //   };
+      //   break;
       default:
         tagObj = {
           type: 'var',

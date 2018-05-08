@@ -105,7 +105,7 @@ export default function initTplFunc(tags) {
       // each语法: {{each list as value, key}}
       let tmps = content.split(/\s+as\s+/);
       if (tmps.length < 2) {
-        throw 'each缺少输入参数';
+        throw '[each] 缺少输入参数';
       }
       let eachName = tmps[0];
       let eachInput = tmps[1].split(',');
@@ -123,12 +123,31 @@ export default function initTplFunc(tags) {
     case 'endeach':
       tpls.push('});');
       break;
-    case 'debug':
-      tpls.push(`;window.${content} = arguments;`);
+    case 'set':
+      // set variable
+      let sets = content.split(/\s+/);
+      let varStr;
+      if (sets.length < 2) {
+        throw '[set] 缺少输入参数';
+      }
+      if (sets[0].indexOf('#') === 0) {
+        varStr = sets[0].replace(/^#/, '');
+        tpls.push(`var ${varStr};`);
+      } else {
+        varStr = sets[0];
+        if (buffer.indexOf(varStr) < 0) {
+          tpls.unshift(`var ${varStr};`);
+          buffer.push(varStr);
+        }
+      }
+      tpls.push(`${varStr} = ${sets[1]};`);
       break;
-    case 'js':
-      tpls.push(`;${content};`);
-      break;
+    // case 'debug':
+    //   tpls.push(`;window.${content} = arguments;`);
+    //   break;
+    // case 'js':
+    //   tpls.push(`;${content};`);
+    //   break;
     }
   });
   tpls.push('return vtmpArr.join("");');

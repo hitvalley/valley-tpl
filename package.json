@@ -2,28 +2,13 @@
   "name": "valley-tpl",
   "version": "1.0.14",
   "description": "valley tpl",
-  "main": "dist/valleymodule-tpl.js",
+  "main": "dist/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "rollup": "node_modules/.bin/rollup",
-    "build-single": "rollup src/index.js --format umd --name \"vtpl\" --output dist/valleytpl.js",
-    "build": "rollup --config rollup.node.config.js",
-    "build-web": "rollup -c rollup.config.js",
-    "build-node": "rollup src/output/node.js --format cjs --name \"Valley\" --output dist/vtpl-node.js",
-    "build-plus": "rollup --config rollup.web.config.js",
-    "build-plus-node": "rollup src/output/node-plus.js --format cjs --name \"vtpl\" --output dist/vtpl-node.js",
-    "build-koa2": "rollup src/output/koa2-view.js --format cjs --name \"vtpl\" --output dist/vtpl-koa2.js",
-    "build-koa": "rollup src/output/koa-view.js --format cjs --name \"vtpl\" --output dist/vtpl-koa.js",
-    "build-express": "rollup src/output/express-view.js --format cjs --name \"vtpl\" --output dist/vtpl-express.js",
-    "build-vm": "rollup src/output/vm-view.js --format umd --name RenderModule --output dist/valleymodule-tpl.js",
-    "node": "rollup src/tpl-node.js -c rollup.config.js",
-    "dev": "node_modules/.bin/rollup -c",
-    "demo": "nodemon --exec node_modules/.bin/babel-node demo.js",
-    "test": "jest",
-    "test_karma": "karma",
-    "test_jasmine": "jasmine JASMINE_CONFIG_PATH=test/unit/jasmine.json"
+    "build": "rollup --config rollup.node.config.js && rollup --config rollup.web.config.js",
+    "test": "jest"
   },
   "jest": {
     "transform": {

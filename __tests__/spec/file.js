@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { join } from 'path';
+import { join, extname } from 'path';
 
 const config = {
   encoding: 'utf-8',
@@ -13,7 +13,8 @@ const config = {
 };
 
 export function writeTestFile(filename, data) {
-  fs.writeFileSync(join(config.viewPath, `${filename}.${config.extension}`), data, {
+  let name = extname(filename) ? filename : `${filename}.${config.extension}`;
+  fs.writeFileSync(join(config.viewPath, name), data, {
     encoding: config.encoding
   });
 }
@@ -21,7 +22,8 @@ export function writeTestFile(filename, data) {
 export function removeTestFile(files) {
   files = typeof files === 'string' ? [files] : files;
   files.forEach(filename => {
-    fs.unlinkSync(join(config.viewPath, `${filename}.${config.extension}`));
+    let name = extname(filename) ? filename : `${filename}.${config.extension}`;
+    fs.unlinkSync(join(config.viewPath, name));
   });
 }
 

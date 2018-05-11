@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { join } from 'path';
+import { join, extname } from 'path';
 
 export default function getContent(tplName, config) {
   let encoding = config.encoding || 'utf-8';
@@ -7,7 +7,8 @@ export default function getContent(tplName, config) {
   let extension = config.extension || 'tpl';
 
   return new Promise(function(resolve, reject){
-    let viewName = `${tplName}.${extension}`;
+    // let viewName = `${tplName}.${extension}`;
+    let viewName = extname(tplName) ? tplName : `${tplName}.${extension}`;
     if (viewName.indexOf('/') !== 0) {
       viewName = join(viewPath, viewName);
     }

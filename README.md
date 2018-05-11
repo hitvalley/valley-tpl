@@ -157,20 +157,5 @@ extends/block //类似于smarty的继承
 
 ## 对于NodeJS框架的支持
 
-### 支持Express
-
-可以使用[vtpl-express](https://github.com/hitvalley/vtpl-express)
-
-安装
-
-	npm i --save vtpl-express
-
-使用
-
-	app.set('view engine', 'vtpl');
-	app.set('views', './views');
-	app.set('view encoding', 'utf-8'); // 设定文件编码格式
-	app.set('view cache', true); // 设定是否使用cache
-	app.get('/', function(req, res){
-	  res.render(tpl, data, filters);
-	});
+* 支持Express: [vtpl-express](https://github.com/hitvalley/vtpl-express)
+* 支持ValleyModule: [vtpl-module](https://github.com/hitvalley/vtpl-module)

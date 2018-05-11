@@ -12,6 +12,7 @@ test ('test string', () => {
   ];
   expect(initTpl(tags)).toEqual(res);
 });
+
 test ('test variable', () => {
   let res;
   let tags = [{
@@ -49,6 +50,7 @@ test ('test variable', () => {
   ];
   expect(initTpl(tags3)).toEqual(res);
 });
+
 test('test if', () => {
   let tags = [{
     type: 'if',
@@ -76,6 +78,7 @@ test('test if', () => {
   ];
   expect(initTpl(tags)).toEqual(res);
 });
+
 test('test for', () => {
   let tags = [{
     type: 'for',
@@ -97,6 +100,7 @@ test('test for', () => {
   ];
   expect(initTpl(tags)).toEqual(res);
 });
+
 test('test each', () => {
   let tags = [{
     type: 'each',
@@ -152,6 +156,7 @@ test('test each', () => {
   expect(initTpl(tags)).toEqual(res);
   expect(initTpl(tags2)).toEqual(res2);
 });
+
 test('test for obj', () => {
   let tags = [{
     type: 'for',
@@ -178,4 +183,22 @@ test('test for obj', () => {
   expect(initTpl(tags, ['obj'])).toEqual(res);
 });
 
-
+test('test for set', () => {
+  let tags = [{
+    type: 'set',
+    content: '#m 1'
+  }, {
+    type: 'set',
+    content: 'n "m"'
+  }];
+  // console.log(initTpl(tags));
+  let res = [
+    'var n;',
+    'var vtmpArr = [];',
+    'var m;',
+    'm = 1;',
+    'n = "m";',
+    'return vtmpArr.join("");'
+  ];
+  expect(initTpl(tags)).toEqual(res);
+});

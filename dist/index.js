@@ -4,7 +4,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var fs = _interopDefault(require('fs'));
 var path = require('path');
-var ValleyModule = _interopDefault(require('valley-module'));
 
 /**
  * 去掉注释
@@ -17,7 +16,8 @@ function removeComments(tpl) {
   if (!tpl) {
     return '';
   }
-  return tpl.split(/[\r\n]+/g).map(line => line.replace(/\*\*\*.*$/, '')).join('\n').replace(/\{\*(.|[\r\n])*?\*\}/, '').trim();
+  // return tpl.split(/[\r\n]+/g).map(line => line.replace(/\*\*\*.*$/, '')).join('\n').replace(/\{\*(.|[\r\n])*?\*\}/, '').trim();
+  return tpl.replace(/\*\*\*.*?(?:[\r\n]+|$)/g, '').replace(/\{\*(.|[\r\n])*?\*\}/g, '').trim();
 }
 
 const tagOpen = '{{';
@@ -67,7 +67,7 @@ const stopWords = 'break|case|catch|continue|default|delete|do|else|finally|for|
 const stopwordRegExp = new RegExp(`\\s*\\b(?:${stopWords})\\b\\s*|\\s*${judgeWords}\\s*`, 'ig');
 function getVariableList(content) {
   // console.log(content, content.split(stopwordRegExp))
-  return content.split(stopwordRegExp).filter(item => item && !item.match(/^\d+$/) && !item.match(/^['"].*['"]$/)).map(item => item.split(/\./g)[0]);
+  return content.split(stopwordRegExp).filter(item => item && !item.match(/^\d+$/) && !item.match(/^['"].*['"]$/) && !item.match(/^\.+$/)).map(item => item.replace(/^\.+|\.+$/, '').split(/\./g)[0]);
 }
 
 function hackBlock(content, hackObj) {
@@ -81,6 +81,16 @@ function hackBlock(content, hackObj) {
 }
 
 const tagRegExp$1 = /\{\{([^{}]*?)\}\}/g;
+
+/**
+  tag info
+    {{ variable }}
+    {{if judgement}} ... {{elseif/elif judgement}} ... {{else}} ... {{/if}}
+    {{each list as value, key}} ... {{/each}}
+    {{for (let i = 0; i < list.length; i++)}} ... {{/for}}
+    {{ set variable value }}
+    {{ new variable value }}
+*/
 
 function analyzeTag(tpl) {
   let res;
@@ -112,6 +122,7 @@ function analyzeTag(tpl) {
         tagObj = {
           type: 'if',
           content: tagArr.join(' ')
+          // content: tagArr
         };
         break;
       case 'elseif':
@@ -119,6 +130,7 @@ function analyzeTag(tpl) {
         tagObj = {
           type: 'elseif',
           content: tagArr.join(' ')
+          // content: tagArr
         };
         break;
       case 'else':
@@ -136,6 +148,7 @@ function analyzeTag(tpl) {
         tagObj = {
           type: tagName,
           content: tagArr.join(' ')
+          // content: tagArr
         };
         break;
       case '/each':
@@ -148,12 +161,32 @@ function analyzeTag(tpl) {
           type: 'endfor'
         };
         break;
-      case 'js':
+      case 'set':
         tagObj = {
-          type: 'js',
+          type: 'set',
           content: tagArr.join(' ')
         };
         break;
+      // case 'new':
+      //   tagObj = {
+      //     type: 'new',
+      //     content: tagArr
+      //   };
+      //   break;
+      case 'debug':
+        break;
+      // case 'debug':
+      //   tagObj = {
+      //     type: 'debug',
+      //     content: tagInfo || '$data'
+      //   };
+      //   break;
+      // case 'js':
+      //   tagObj = {
+      //     type: 'js',
+      //     content: tagArr.join(' ')
+      //   };
+      //   break;
       default:
         tagObj = {
           type: 'var',
@@ -313,7 +346,7 @@ function initTplFunc(tags) {
       // each语法: {{each list as value, key}}
       let tmps = content.split(/\s+as\s+/);
       if (tmps.length < 2) {
-        throw 'each缺少输入参数';
+        throw '[each] 缺少输入参数';
       }
       let eachName = tmps[0];
       let eachInput = tmps[1].split(',');
@@ -331,9 +364,31 @@ function initTplFunc(tags) {
     case 'endeach':
       tpls.push('});');
       break;
+    case 'set':
+      // set variable
+      let sets = content.split(/\s+/);
+      let varStr;
+      if (sets.length < 2) {
+        throw '[set] 缺少输入参数';
+      }
+      if (sets[0].indexOf('#') === 0) {
+        varStr = sets[0].replace(/^#/, '');
+        tpls.push(`var ${varStr};`);
+      } else {
+        varStr = sets[0];
+        if (buffer.indexOf(varStr) < 0) {
+          tpls.unshift(`var ${varStr};`);
+          buffer.push(varStr);
+        }
+      }
+      tpls.push(`${varStr} = ${sets[1]};`);
+      break;
+    // case 'debug':
+    //   tpls.push(`;window.${content} = arguments;`);
+    //   break;
     // case 'js':
-      // tpls.push(`;${content};`);
-      // break;
+    //   tpls.push(`;${content};`);
+    //   break;
     }
   });
   tpls.push('return vtmpArr.join("");');
@@ -585,88 +640,4 @@ ValleyTpl.prepareTpl = function(tplName, config){
   return prepareTpl(tplName, config ? Object.assign({}, this.config, config) : this.config);
 };
 
-const DefaultTPL = 'Y-M-D H:I:S';
-
-function datestr(timestamp, tpl) {
-  let date;
-  if (typeof timestamp === 'string' && isNaN(timestamp)) {
-    tpl = timestamp;
-    timestamp = new Date();
-  }
-  if (!timestamp) {
-    date = new Date();
-  } else if (timestamp.toString().length === 10) {
-    date = new Date(timestamp * 1000);
-  } else {
-    date = new Date(timestamp);
-  }
-  tpl = tpl || DefaultTPL;
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-  let hour = date.getHours();
-  let minute = date.getMinutes();
-  let second = date.getSeconds();
-  let obj = {
-    'Y': date.getFullYear(),
-    'y': date.getYear(),
-    'M': month < 10 ? ('0' + month) : month,
-    'm': month,
-    'D': day < 10 ? ('0' + day) : day,
-    'd': day,
-    'H': hour < 10 ? ('0' + hour) : hour,
-    'h': hour,
-    'I': minute < 10 ? ('0' + minute) : minute,
-    'i': minute,
-    'S': second < 10 ? ('0' + second) : second,
-    's': second
-  };
-  return tpl.replace(/[YMDHISymdhis]/g, $0 => obj[$0]);
-}
-
-const escapeHash = {
-  '<': '&lt;',
-  '>': '&gt;',
-  '&': '&amp;',
-  '"': '&quot;',
-  "'": '&#x27;',
-  '/': '&#x2f;'
-};
-
-const escapeRegExp = new RegExp('[&<>"\']', 'igm');
-
-function htmlspecialchars(str) {
-  return typeof str === 'string' ? str.replace(escapeRegExp, $0 => escapeHash[$0]) : str;
-}
-
-ValleyTpl.register('datestr', datestr);
-ValleyTpl.register('htmlspecialchars', htmlspecialchars);
-
-class RenderModule extends ValleyModule {
-  constructor(input) {
-    super(input);
-    input = input || {};
-    let conf = Object.assign({}, {
-      viewPath: input.viewPath || './',
-      encoding: input.encoding || 'utf-8',
-      extension: input.extension || 'tpl'
-    });
-    ValleyTpl.setConfig(conf);
-  }
-  prepare() {
-    this.use('prepareRender', async next => {
-      this.context.register = ValleyTpl.register;
-      this.context.render = async (tpl, data, scope) => {
-        let tplContent = await ValleyTpl.prepareTpl(tpl).catch(e => {
-          throw e;
-        });
-        let html = ValleyTpl(tplContent, data || {}, scope || {});
-        return html;
-      };
-      this.render = this.render || this.context.render;
-      this.register = this.register || this.context.register;
-      await next();
-    });
-  }
-}
-
-module.exports = RenderModule;
+module.exports = ValleyTpl;

@@ -1,7 +1,7 @@
 export default {
-  input: 'src/output/vm-view.js',
+  input: 'src/output/node.js',
   output: {
-    file: 'dist/valleymodule-tpl.js',
+    file: 'dist/index.js',
     format: 'cjs'
   },
   external: [

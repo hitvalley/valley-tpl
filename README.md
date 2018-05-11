@@ -1,6 +1,6 @@
 # ValleyTpl
 
-当前版本：0.1
+当前版本：0.2
 
 ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的。因此，该引擎目前可以在 Browser 和 NodeJS 两个终端执行。
 
@@ -17,13 +17,9 @@ ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的
 
 ### Run in Browser
 
-生成valleytpl.js
+生成浏览器引用文件：valleytpl.js和valleytpl.min.js
 
-	npm run build-plus
-
-生成valleytpl.min.js
-
-	npm run build-web
+	npm run build:web
 
 ValleyTpl引入
 
@@ -46,11 +42,16 @@ ValleyTpl引入
 
 生成vtpl-node.js
 
-	npm run build-plus-node
+	npm run build:node
 
 引用
 
-	const vtpl = require('./dist/vtpl-node.js');
+	const vtpl = require('./dist/index.js');
+
+或者
+
+	npm i valley-tpl
+	const vtpl = require('valley-tpl');
 
 调用
 
@@ -154,96 +155,3 @@ extends/block //类似于smarty的继承
 
 	{{include common}}
 
-## 对于NodeJS框架的支持
-
-### 支持Koa1
-
-生成中间件
-
-	npm run build-koa
-
-使用
-
-	const views = require('./vtpl-koa');
-	app.use(views(viewPath, {
-	  extension: ...
-	  encoding: ...
-	  cache: ...
-	}));
-	app.use(function*() {
-	  yield this.render(tpl, data, filters);
-	});
-
-### 支持Koa2
-
-生成中间件
-
-	npm run build-koa2
-
-使用
-
-	const views = require('./vtpl-koa2');
-	app.use(views(viewPath, {
-	  extension: ...
-	  encoding: ...
-	  cache: ...
-	}));
-	app.use(async (ctx, next) => {
-	  await ctx.render(tpl, data, filters);
-	});
-
-### 支持Express
-
-安装
-
-	npm i --save vtpl-express
-
-使用
-
-	app.set('view engine', 'vtpl');
-	app.set('views', './views');
-	app.set('view extension', 'tpl'); // 设定文件后缀名
-	app.set('view encoding', 'utf-8'); // 设定文件编码格式
-	app.set('view cache', true); // 设定是否使用cache
-	app.get('/', function(req, res){
-	  res.render(tpl, data, filters);
-	});
-
-## 支持ValleyModule
-
-ValleyModule相关信息：https://github.com/hitvalley/valley_module
-
-DEMO位置：https://github.com/hitvalley/valley_module_demo/blob/master/static/demo2.html
-
-生成库文件
-
-	npm run build-vm
-
-文件位置
-
-	dist/valleymodule-tpl.js
-
-使用方法
-
-	const renderModule = new RenderModule({
-	  viewPath: './dist/',
-	  extension: 'tpl',
-	  encoding: 'utf-8'
-	});
-	class MainModule extends ValleyModule {
-	  prepare() {
-	    ...
-	    this.use('prepareRender', renderModule); // 引入
-	    ...
-	    this.use('render', async next => {
-	      let html = this.context.render(tpl, data, scope);// 调用
-	      ...
-	    })
-	  }
-	}
-	let mainModule = new MainModule();
-	...
-
-## DEMO
-
-[KOA DEMO](https://github.com/hitvalley/koa_vtpl_demo)

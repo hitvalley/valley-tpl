@@ -555,7 +555,8 @@ function getContent$2(tplName, config) {
   let extension = config.extension || 'tpl';
 
   return new Promise(function(resolve, reject){
-    let viewName = `${tplName}.${extension}`;
+    // let viewName = `${tplName}.${extension}`;
+    let viewName = path.extname(tplName) ? tplName : `${tplName}.${extension}`;
     if (viewName.indexOf('/') !== 0) {
       viewName = path.join(viewPath, viewName);
     }

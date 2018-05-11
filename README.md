@@ -1,6 +1,6 @@
 # ValleyTpl
 
-当前版本：0.2
+当前版本：1.1
 
 ValleyTpl是一款Javascript的模板引擎，是以 StringBased 方式实现的。因此，该引擎目前可以在 Browser 和 NodeJS 两个终端执行。
 

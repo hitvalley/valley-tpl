@@ -18,7 +18,8 @@
     },
     "testMatch": [
       "**/__tests__/**/*spec.js?(x)"
-    ]
+    ],
+    "collectCoverage": true
   },
   "repository": {
     "type": "git",

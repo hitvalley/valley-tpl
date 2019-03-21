@@ -9,7 +9,7 @@ test('content', () => {
     auth: 'gty',
     date: d
   }, {});
-  let res = '<h1>test</h1><p>test for valley tpl</p><div>gty</div><footer>Tue Aug 29 2017 10:10:42 GMT+0800 (CST)</footer>';
+  let res = '<h1>test</h1><p>test for valley tpl</p><div>gty</div><footer>Tue Aug 29 2017 10:10:42 GMT+0800 (China Standard Time)</footer>';
   expect(html).toBe(res);
 });
 test('with func', () => {
